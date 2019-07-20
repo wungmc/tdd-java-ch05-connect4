@@ -58,6 +58,14 @@ public class Connect4Spec {
 	}
 	
 	@Test
+	public void whenDiscInsert7ColumnThenThrowRuntimeException() {
+		int column = 7;
+		expected.expect(RuntimeException.class);
+		expected.expectMessage("Invalid column : " + column);
+		connect4.putDiscInColumn(column);
+	}
+	
+	@Test
 	public void whenDiscInsertedInEmptyColumnThenPositionIsZero() {
 		int column = 1;
 		assertThat(connect4.putDiscInColumn(column), is(0));
@@ -123,6 +131,23 @@ public class Connect4Spec {
 		
 		System.out.println(out.toString());
 		assertThat(out.toString(), containsString("| |R| | |G| | |"));
+	}
+	
+	
+	@Test
+	public void whenGameStartThenIsNotFinished() {
+		assertFalse(connect4.isFinished());
+	}
+	
+	@Test
+	public void whenBoardIsFullThenIsFinished() {
+		for (int row = 0; row < 6; row++) {
+			for (int col = 0; col < 7; col++) {
+				connect4.putDiscInColumn(col);
+			}
+		}
+		assertTrue("Game must be finished", connect4.isFinished());
+		
 	}
 	
 }

@@ -65,7 +65,7 @@ public class Connect4 {
 	}
 	
 	private void checkColumn(int column) {
-		if (column < 1 || column > COLUMNS) {
+		if (column < 0 || column >= COLUMNS) {
 			throw new RuntimeException("Invalid column : " + column);
 		}
 	}
@@ -92,6 +92,10 @@ public class Connect4 {
 			Stream.of(board[row]).forEachOrdered(stringJoiner::add);
 			out.println(stringJoiner);
 		}
+	}
+	
+	public boolean isFinished() {
+		return getNumberOfDiscs() == ROWS * COLUMNS;
 	}
 	
 }
