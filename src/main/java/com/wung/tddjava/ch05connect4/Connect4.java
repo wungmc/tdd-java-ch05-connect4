@@ -139,9 +139,7 @@ public class Connect4 {
 		
 		StringBuilder sb = new StringBuilder();
 		while (myCol < COLUMNS && myRow < ROWS) {
-			sb.append(board[myRow][myCol]);
-			myRow++;
-			myCol++;
+			sb.append(board[myRow++][myCol++]);
 		}
 		if (pattern.matcher(sb.toString().trim()).matches()) {
 			return true;
