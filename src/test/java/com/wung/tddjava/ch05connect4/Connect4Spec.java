@@ -63,4 +63,12 @@ public class Connect4Spec {
 		assertThat(connect4.putDiscInColumn(column), is(1));
 	}
 	
+	@Test
+	public void whenDiscInsertedInColumnThenNumberOfDiscsIncreases() {
+		int column = 1;
+		connect4.putDiscInColumn(column);
+		connect4.putDiscInColumn(column);
+		assertThat(connect4.getNumberOfDiscs(), is(2));
+	}
+	
 }
