@@ -20,7 +20,11 @@ public class Connect4 {
 	private static final int ROWS = 6;
 	private static final String EMPTY = " ";
 	
+	private static final String RED = "R";
+	private static final String GREEN = "G";
+	
 	private String[][] board = new String[ROWS][COLUMNS];
+	private String currentPlayer = RED;
 	
 	public int getColumns() {
 		return COLUMNS;
@@ -31,6 +35,10 @@ public class Connect4 {
 	
 	public Connect4() {
 		Arrays.stream(board).forEach(row -> Arrays.fill(row, EMPTY));
+	}
+	
+	public String getCurrentPlayer() {
+		return currentPlayer;
 	}
 	
 	public int getNumberOfDiscs() {

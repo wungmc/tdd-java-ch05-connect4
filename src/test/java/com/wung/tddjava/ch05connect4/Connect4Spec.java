@@ -83,5 +83,10 @@ public class Connect4Spec {
 		
 	}
 	
+	// 假定总是红方先来
+	@Test
+	public void whenFirstPlayerPlayThenDiscColorIsR() {
+		assertThat(connect4.getCurrentPlayer(), is("R"));
+	}
 	
 }
