@@ -131,6 +131,22 @@ public class Connect4 {
 		if (pattern.matcher(discs.trim()).matches()) {
 			return true;
 		}
+		
+		// 左下角到右上角方向
+		int startOffset = Math.min(column, row);
+		int myRow = row - startOffset;
+		int myCol = column - startOffset;
+		
+		StringBuilder sb = new StringBuilder();
+		while (myCol < COLUMNS && myRow < ROWS) {
+			sb.append(board[myRow][myCol]);
+			myRow++;
+			myCol++;
+		}
+		if (pattern.matcher(sb.toString().trim()).matches()) {
+			return true;
+		}
+		
 		return false;
 	}
 	

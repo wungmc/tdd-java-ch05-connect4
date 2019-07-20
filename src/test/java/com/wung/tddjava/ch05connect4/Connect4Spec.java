@@ -176,5 +176,13 @@ public class Connect4Spec {
 		
 	}
 	
+	@Test
+	public void when4Diagonal1DiscsAreConnectedThenPlayerWin() {
+		int[] cols = new int[] {1, 2, 2, 3, 4, 3, 3, 4, 4, 5, 4};
+		for (int i = 0; i < cols.length; i++) {
+			connect4.putDiscInColumn(cols[i]);
+		}
+		assertThat(connect4.getWinner(), is("R"));
+	}
 	
 }
