@@ -8,6 +8,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -16,6 +21,7 @@ import static org.junit.Assert.*;
  */
 public class Connect4Spec {
 	
+	private OutputStream out;
 	private Connect4 connect4;
 	
 	@Rule
@@ -23,7 +29,8 @@ public class Connect4Spec {
 	
 	@Before
 	public void before() {
-		connect4 =  new Connect4();
+		out = new ByteArrayOutputStream();
+		connect4 =  new Connect4(new PrintStream(out));
 	}
 	
 	@Test
@@ -94,6 +101,20 @@ public class Connect4Spec {
 		int column = 1;
 		connect4.putDiscInColumn(column);
 		assertThat(connect4.getCurrentPlayer(), is("G"));
+	}
+	
+	@Test
+	public void whenAskedForCurrentPlayerThenOutputNotice() {
+		connect4.getCurrentPlayer();
+		assertThat(out.toString(), containsString("Player R turn"));
+	}
+	
+	@Test
+	public void whenDiscInsertedThenOutBoard() {
+		int column = 1;
+		connect4.putDiscInColumn(column);
+		System.out.println(out.toString());
+		assertThat(out.toString(), containsString("| |R| | | | | |"));
 	}
 	
 }

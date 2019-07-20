@@ -3,7 +3,9 @@
  */
 package com.wung.tddjava.ch05connect4;
 
+import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.StringJoiner;
 import java.util.stream.IntStream;
 
 /**
@@ -26,6 +28,8 @@ public class Connect4 {
 	private String[][] board = new String[ROWS][COLUMNS];
 	private String currentPlayer = RED;
 	
+	private PrintStream out;
+	
 	public int getColumns() {
 		return COLUMNS;
 	}
@@ -33,11 +37,13 @@ public class Connect4 {
 		return ROWS;
 	}
 	
-	public Connect4() {
+	public Connect4(PrintStream out) {
+		this.out = out;
 		Arrays.stream(board).forEach(row -> Arrays.fill(row, EMPTY));
 	}
 	
 	public String getCurrentPlayer() {
+		out.println("Player " + currentPlayer + " turn");
 		return currentPlayer;
 	}
 	
@@ -52,6 +58,7 @@ public class Connect4 {
 		int row = getNumberOfDiscsInColumn(column);
 		checkPositionWhenInsert(row, column);
 		board[row][column] = currentPlayer;
+		printBoard();
 		switchPlayer();
 		return row;
 	}
@@ -76,6 +83,16 @@ public class Connect4 {
 	
 	private void switchPlayer() {
 		currentPlayer = currentPlayer.equals(RED) ? GREEN : RED;
+	}
+	
+	private void printBoard() {
+		for (int row = ROWS - 1; row >= 0; row--) {
+			StringJoiner stringJoiner = new StringJoiner("|", "|", "|");
+			for (int col = 0; col < COLUMNS; col++) {
+				stringJoiner.add(board[row][col]);
+			}
+			out.println(stringJoiner);
+		}
 	}
 	
 }
