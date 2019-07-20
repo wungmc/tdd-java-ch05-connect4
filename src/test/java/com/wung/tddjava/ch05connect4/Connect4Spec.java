@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -159,6 +160,20 @@ public class Connect4Spec {
 		
 		connect4.putDiscInColumn(1); // R
 		assertThat(connect4.getWinner(), is("R"));
+	}
+	
+	
+	@Test
+	public void when4HorizontalDiscsAreConnectedThenPlayerWin() {
+		int col;
+		for (col = 0; col < 3; col++) {
+			connect4.putDiscInColumn(col); // R
+			connect4.putDiscInColumn(col); // G
+		}
+		assertThat(connect4.getWinner(), isEmptyString());
+		connect4.putDiscInColumn(col); // R
+		assertThat(connect4.getWinner(), is("R"));
+		
 	}
 	
 	

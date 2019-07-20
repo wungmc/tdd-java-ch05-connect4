@@ -114,13 +114,24 @@ public class Connect4 {
 	private boolean isWin(int row, int column) {
 		Pattern pattern = Pattern.compile(".*" + currentPlayer + "{4}");
 		
-		// 垂直线
+		// 垂直方向
 		String discs = IntStream.range(0, row + 1)
 				.mapToObj(r -> board[r][column])
 				.reduce(String::concat)
 				.get();
+		if (pattern.matcher(discs.trim()).matches()) {
+			return true;
+		}
 		
-		return pattern.matcher(discs).matches();
+		// 水平方向
+		discs = Stream.of(board[row])
+				.reduce(String::concat)
+				.get();
+
+		if (pattern.matcher(discs.trim()).matches()) {
+			return true;
+		}
+		return false;
 	}
 	
 }
