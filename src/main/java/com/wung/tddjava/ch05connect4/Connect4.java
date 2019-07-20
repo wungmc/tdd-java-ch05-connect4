@@ -3,6 +3,9 @@
  */
 package com.wung.tddjava.ch05connect4;
 
+import javax.swing.border.EmptyBorder;
+import java.util.Arrays;
+
 /**
  * 7 列 * 6 行的棋盘游戏：
  * - 两个玩家，分为红色和绿色
@@ -15,6 +18,9 @@ public class Connect4 {
 	
 	private static final int COLUMNS = 7;
 	private static final int ROWS = 6;
+	private static final String EMPTY = " ";
+	
+	private String[][] board = new String[ROWS][COLUMNS];
 	
 	public int getColumns() {
 		return COLUMNS;
@@ -23,8 +29,30 @@ public class Connect4 {
 		return ROWS;
 	}
 	
+	public Connect4() {
+		Arrays.stream(board).forEach(row -> Arrays.fill(row, EMPTY));
+	}
+	
 	public int getNumberOfDiscs() {
 		return 0;
+	}
+	
+	public int putDiscInColumn(int column) {
+		if (column < 1 || column > COLUMNS) {
+			throw new RuntimeException("Invalid column : " + column);
+		}
+		int row = getNumberOfDiscsInColumn(column);
+		return row;
+	}
+	
+	public int getNumberOfDiscsInColumn(int column) {
+		int sum = 0;
+		for (int i = 0; i < ROWS; i++) {
+			if (!board[i][column].equalsIgnoreCase(EMPTY)) {
+				sum++;
+			}
+		}
+		return sum;
 	}
 	
 }
