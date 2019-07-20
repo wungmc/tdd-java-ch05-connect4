@@ -42,16 +42,20 @@ public class Connect4 {
 	public int putDiscInColumn(int column) {
 		checkColumn(column);
 		int row = getNumberOfDiscsInColumn(column);
-		if (row >= ROWS) {
-			throw new RuntimeException(column + " is full");
-		}
+		checkPositionWhenInsert(row, column);
 		board[row][column] = "R";
 		return row;
 	}
 	
-	public void checkColumn(int column) {
+	private void checkColumn(int column) {
 		if (column < 1 || column > COLUMNS) {
 			throw new RuntimeException("Invalid column : " + column);
+		}
+	}
+	
+	private void checkPositionWhenInsert(int row, int column) {
+		if (row >= ROWS) {
+			throw new RuntimeException(column + " is full");
 		}
 	}
 	
