@@ -185,4 +185,13 @@ public class Connect4Spec {
 		assertThat(connect4.getWinner(), is("R"));
 	}
 	
+	@Test
+	public void when4Diagonal2DiscsAreConnectedThenPlayerWin() {
+		int[] cols = new int[] {3, 4, 2, 3, 2, 2, 1, 1, 1, 1};
+		for (int i = 0; i < cols.length; i++) {
+			connect4.putDiscInColumn(cols[i]);
+		}
+		assertThat(connect4.getWinner(), is("G"));
+	}
+	
 }

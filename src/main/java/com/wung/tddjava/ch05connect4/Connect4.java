@@ -145,6 +145,19 @@ public class Connect4 {
 			return true;
 		}
 		
+		// 左上角到右小角方向
+		startOffset = Math.min(column, ROWS - 1 - row);//???
+		myCol = column - startOffset;
+		myRow = row + startOffset;
+		
+		sb = new StringBuilder();
+		while (myRow >= 0 && myCol < COLUMNS) {
+			sb.append(board[myRow--][myCol++]);
+		}
+		if (pattern.matcher(sb.toString().trim()).matches()) {
+			return true;
+		}
+		
 		return false;
 	}
 	
