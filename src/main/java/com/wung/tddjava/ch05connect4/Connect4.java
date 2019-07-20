@@ -12,4 +12,23 @@ package com.wung.tddjava.ch05connect4;
  * @author wung 2019-07-20.
  */
 public class Connect4 {
+	
+	private final int COLUMNS = 7;
+	private final int ROWS = 6;
+	
+	public int getColumns() {
+		return COLUMNS;
+	}
+	public int getRows() {
+		return ROWS;
+	}
+	
+	public Connect4() {
+	
+	}
+	
+	public int getNumberOfDiscs() {
+		return 0;
+	}
+	
 }
