@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * 7 列 * 6 行的棋盘游戏：
@@ -88,9 +89,7 @@ public class Connect4 {
 	private void printBoard() {
 		for (int row = ROWS - 1; row >= 0; row--) {
 			StringJoiner stringJoiner = new StringJoiner("|", "|", "|");
-			for (int col = 0; col < COLUMNS; col++) {
-				stringJoiner.add(board[row][col]);
-			}
+			Stream.of(board[row]).forEachOrdered(stringJoiner::add);
 			out.println(stringJoiner);
 		}
 	}

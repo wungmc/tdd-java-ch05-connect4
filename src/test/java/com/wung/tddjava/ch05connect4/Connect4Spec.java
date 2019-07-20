@@ -116,5 +116,13 @@ public class Connect4Spec {
 		System.out.println(out.toString());
 		assertThat(out.toString(), containsString("| |R| | | | | |"));
 	}
+	@Test
+	public void whenSecondDiscInsertedThenOutBoard() {
+		connect4.putDiscInColumn(1);
+		connect4.putDiscInColumn(4);
+		
+		System.out.println(out.toString());
+		assertThat(out.toString(), containsString("| |R| | |G| | |"));
+	}
 	
 }
