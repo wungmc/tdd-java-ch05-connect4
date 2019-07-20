@@ -56,4 +56,11 @@ public class Connect4Spec {
 		assertThat(connect4.putDiscInColumn(column), is(0));
 	}
 	
+	@Test
+	public void whenSecondDiscInsertedInColumnThenPositionIsOne() {
+		int column = 1;
+		connect4.putDiscInColumn(column);
+		assertThat(connect4.putDiscInColumn(column), is(1));
+	}
+	
 }

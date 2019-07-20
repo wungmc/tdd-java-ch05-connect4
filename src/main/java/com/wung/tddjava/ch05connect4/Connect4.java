@@ -3,8 +3,8 @@
  */
 package com.wung.tddjava.ch05connect4;
 
-import javax.swing.border.EmptyBorder;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
  * 7 列 * 6 行的棋盘游戏：
@@ -38,21 +38,22 @@ public class Connect4 {
 	}
 	
 	public int putDiscInColumn(int column) {
-		if (column < 1 || column > COLUMNS) {
-			throw new RuntimeException("Invalid column : " + column);
-		}
+		checkColumn(column);
 		int row = getNumberOfDiscsInColumn(column);
+		board[row][column] = "R";
 		return row;
 	}
 	
-	public int getNumberOfDiscsInColumn(int column) {
-		int sum = 0;
-		for (int i = 0; i < ROWS; i++) {
-			if (!board[i][column].equalsIgnoreCase(EMPTY)) {
-				sum++;
-			}
+	public void checkColumn(int column) {
+		if (column < 1 || column > COLUMNS) {
+			throw new RuntimeException("Invalid column : " + column);
 		}
-		return sum;
+	}
+	
+	public int getNumberOfDiscsInColumn(int column) {
+		return (int)IntStream.range(0, ROWS)
+				.filter(row -> !board[row][column].equalsIgnoreCase(EMPTY))
+				.count();
 	}
 	
 }
