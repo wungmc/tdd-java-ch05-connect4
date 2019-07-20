@@ -6,6 +6,7 @@ package com.wung.tddjava.ch05connect4;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.StringJoiner;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -28,6 +29,7 @@ public class Connect4 {
 	
 	private String[][] board = new String[ROWS][COLUMNS];
 	private String currentPlayer = RED;
+	private String winner = "";
 	
 	private PrintStream out;
 	
@@ -60,6 +62,11 @@ public class Connect4 {
 		checkPositionWhenInsert(row, column);
 		board[row][column] = currentPlayer;
 		printBoard();
+		
+		if (isWin(row, column)) {
+			winner = currentPlayer;
+		}
+		
 		switchPlayer();
 		return row;
 	}
@@ -96,6 +103,21 @@ public class Connect4 {
 	
 	public boolean isFinished() {
 		return getNumberOfDiscs() == ROWS * COLUMNS;
+	}
+	
+	public String getWinner() {
+		return winner;
+	}
+	
+	private boolean isWin(int row, int column) {
+		Pattern pattern = Pattern.compile(".*" + currentPlayer + "{4}");
+		
+		// 垂直线
+		StringBuilder sb = new StringBuilder();
+		for (int r = 0; r <= row; r++) {
+			sb.append(board[r][column]);
+		}
+		return pattern.matcher(sb.toString()).matches();
 	}
 	
 }

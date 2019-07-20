@@ -12,8 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 /**
@@ -149,5 +148,18 @@ public class Connect4Spec {
 		assertTrue("Game must be finished", connect4.isFinished());
 		
 	}
+	
+	@Test
+	public void when4VertiaclDiscsAreConnectedThenPlayerWin() {
+		for (int i = 0; i < 3; i++) {
+			connect4.putDiscInColumn(1); // R
+			connect4.putDiscInColumn(3); // G
+		}
+		assertThat(connect4.getWinner(), isEmptyString());
+		
+		connect4.putDiscInColumn(1); // R
+		assertThat(connect4.getWinner(), is("R"));
+	}
+	
 	
 }
