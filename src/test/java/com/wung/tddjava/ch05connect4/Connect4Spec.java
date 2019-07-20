@@ -89,4 +89,11 @@ public class Connect4Spec {
 		assertThat(connect4.getCurrentPlayer(), is("R"));
 	}
 	
+	@Test
+	public void whenSecondPlayerPlayThenDiscColorIsG() {
+		int column = 1;
+		connect4.putDiscInColumn(column);
+		assertThat(connect4.getCurrentPlayer(), is("G"));
+	}
+	
 }

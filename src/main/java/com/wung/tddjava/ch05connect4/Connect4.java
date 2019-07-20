@@ -51,7 +51,8 @@ public class Connect4 {
 		checkColumn(column);
 		int row = getNumberOfDiscsInColumn(column);
 		checkPositionWhenInsert(row, column);
-		board[row][column] = "R";
+		board[row][column] = currentPlayer;
+		switchPlayer();
 		return row;
 	}
 	
@@ -71,6 +72,10 @@ public class Connect4 {
 		return (int)IntStream.range(0, ROWS)
 				.filter(row -> !board[row][column].equalsIgnoreCase(EMPTY))
 				.count();
+	}
+	
+	private void switchPlayer() {
+		currentPlayer = currentPlayer.equals(RED) ? GREEN : RED;
 	}
 	
 }
