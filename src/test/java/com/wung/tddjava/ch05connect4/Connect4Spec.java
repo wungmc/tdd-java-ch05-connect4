@@ -71,4 +71,17 @@ public class Connect4Spec {
 		assertThat(connect4.getNumberOfDiscs(), is(2));
 	}
 	
+	@Test
+	public void whenDiscInsertFullColumnThenThrowRuntimeException() {
+		int column = 2;
+		for (int row = 0; row < 6; row++) {
+			connect4.putDiscInColumn(column);
+		}
+		expected.expect(RuntimeException.class);
+		expected.expectMessage(column + " is full");
+		connect4.putDiscInColumn(column);
+		
+	}
+	
+	
 }

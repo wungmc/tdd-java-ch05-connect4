@@ -42,6 +42,9 @@ public class Connect4 {
 	public int putDiscInColumn(int column) {
 		checkColumn(column);
 		int row = getNumberOfDiscsInColumn(column);
+		if (row >= ROWS) {
+			throw new RuntimeException(column + " is full");
+		}
 		board[row][column] = "R";
 		return row;
 	}
