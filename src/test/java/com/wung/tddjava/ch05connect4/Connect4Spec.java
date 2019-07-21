@@ -194,4 +194,15 @@ public class Connect4Spec {
 		assertThat(connect4.getWinner(), is("G"));
 	}
 	
+	@Test
+	public void regexMatchesAndFindDiff() {
+		Pattern pattern = Pattern.compile(".*R{4}");
+		assertTrue(pattern.matcher("  RRRR").find());
+		assertTrue(pattern.matcher("  RRRR").matches());
+		
+		// 注意 matches：全匹配；find：部分匹配
+		assertTrue(pattern.matcher("RRRR  ").find()); // true
+		assertFalse(pattern.matcher("RRRR  ").matches()); // false
+	}
+	
 }
