@@ -5,10 +5,8 @@ package com.wung.tddjava.ch05connect4;
 
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -25,6 +23,7 @@ public class Connect4 {
 	private static final int COLUMNS = 7;
 	private static final int ROWS = 6;
 	private static final String EMPTY = " ";
+	private static final String DELIMITER = "|";
 	
 	private static final String RED = "R";
 	private static final String GREEN = "G";
@@ -97,7 +96,7 @@ public class Connect4 {
 	
 	private void printBoard() {
 		for (int row = ROWS - 1; row >= 0; row--) {
-			StringJoiner stringJoiner = new StringJoiner("|", "|", "|");
+			StringJoiner stringJoiner = new StringJoiner(DELIMITER, DELIMITER, DELIMITER);
 			Stream.of(board[row]).forEachOrdered(stringJoiner::add);
 			out.println(stringJoiner);
 		}
@@ -113,26 +112,51 @@ public class Connect4 {
 	
 	private boolean isWin(int row, int column) {
 		Pattern pattern = Pattern.compile(".*" + currentPlayer + "{4}" + ".*");
+		if (isWinVertial(row, column, pattern)) {
+			return true;
+		}
 		
-		// 垂直方向
+		if (isWinHorizontal(row, column, pattern)) {
+			return true;
+		}
+		
+		if (isWinBottomToTop(row, column, pattern)) {
+			return true;
+		}
+		
+		if (isWinTopToBottom(row, column, pattern)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 水平方向
+	 */
+	private boolean isWinHorizontal(int row, int column, Pattern winPattern) {
+		String discs = Stream.of(board[row])
+				.reduce(String::concat)
+				.get();
+		
+		return winPattern.matcher(discs).matches();
+	}
+	
+	/**
+	 * 垂直方向
+	 */
+	private boolean isWinVertial(int row, int column, Pattern winPattern) {
 		String discs = IntStream.range(0, row + 1)
 				.mapToObj(r -> board[r][column])
 				.reduce(String::concat)
 				.get();
-		if (pattern.matcher(discs).matches()) {
-			return true;
-		}
-		
-		// 水平方向
-		discs = Stream.of(board[row])
-				.reduce(String::concat)
-				.get();
-
-		if (pattern.matcher(discs).matches()) {
-			return true;
-		}
-		
-		// 左下角到右上角方向
+		return winPattern.matcher(discs).matches();
+	}
+	
+	/**
+	 * 左下角到右上角方向
+	 */
+	private boolean isWinBottomToTop(int row, int column, Pattern winPattern) {
 		int startOffset = Math.min(column, row);
 		int myRow = row - startOffset;
 		int myCol = column - startOffset;
@@ -141,24 +165,22 @@ public class Connect4 {
 		while (myCol < COLUMNS && myRow < ROWS) {
 			sb.append(board[myRow++][myCol++]);
 		}
-		if (pattern.matcher(sb.toString()).matches()) {
-			return true;
-		}
+		return winPattern.matcher(sb.toString()).matches();
+	}
+	
+	/**
+	 * 左上角到右小角方向
+	 */
+	private boolean isWinTopToBottom(int row, int column, Pattern winPattern) {
+		int startOffset = Math.min(column, ROWS - 1 - row);//???
+		int myCol = column - startOffset;
+		int myRow = row + startOffset;
 		
-		// 左上角到右小角方向
-		startOffset = Math.min(column, ROWS - 1 - row);//???
-		myCol = column - startOffset;
-		myRow = row + startOffset;
-		
-		sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		while (myRow >= 0 && myCol < COLUMNS) {
 			sb.append(board[myRow--][myCol++]);
 		}
-		if (pattern.matcher(sb.toString()).matches()) {
-			return true;
-		}
-		
-		return false;
+		return winPattern.matcher(sb.toString()).matches();
 	}
 	
 }
