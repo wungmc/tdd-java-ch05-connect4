@@ -202,7 +202,7 @@ public class Connect4Spec {
 		
 		// 注意 matches：全匹配；find：部分匹配
 		assertTrue(pattern.matcher("RRRR  ").find()); // true
-		assertFalse(pattern.matcher("RRRR  ").matches()); // false
+		assertFalse(pattern.matcher("RRRR  ").matches()); // 注意，这里matches返回false
 	}
 	
 }
